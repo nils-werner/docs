@@ -111,6 +111,7 @@ Exceptions can be made by the release manager setting priority to "Highest" and 
     - (Dev) Last check of tickets that need to be merged before RC1  
 5. Build:  
     - Review all `XXX FIXME` notes 
+    - Upgrade schema for next version, [see example pull request](https://github.com/mattermost/platform/pull/4474)
     - Master is tagged and branched and “Release Candidate 1″ is cut (e.g. 1.1.0-RC1) according to the Release Candidate Checklist in ``mattermost/process``
     - CI servers are updated to the release branch
     - Translation server is locked to the release branch
@@ -251,7 +252,7 @@ If a bug fix release is required, run through the following steps again:
         - [RC Build Testing for core team](https://mattermost.atlassian.net/browse/PLT-2208)
         - [Upgrade gitlab.mattermost.com to RC1](https://mattermost.atlassian.net/browse/PLT-3116)
         - [Push final build to gitlab.mattermost.com](https://mattermost.atlassian.net/browse/PLT-3117)
-        - [Cut build and set up RC1 servers, including a note to check for all XXX items](https://mattermost.atlassian.net/browse/PLT-3937)
+        - [Upgrade schema, cut release candidate and set up RC1 servers](https://mattermost.atlassian.net/browse/PLT-4226)
     - Create [PR tracking spreadsheet](https://docs.google.com/spreadsheets/d/1YkRqyQk0Y4ZouV-SsXbSjbzGOXu2ZSPSd4XC_4LAErI/edit#gid=0) for next release
         - Populate with any PR's that have already went in for the next release
         - Zapier manager updates GitHub automation zap to new PR tracking spreadsheet
