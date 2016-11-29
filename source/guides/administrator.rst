@@ -41,6 +41,7 @@ Deployment
    /deployment/sso-google*
    /deployment/sso-office*
    /deployment/webrtc*
+   /deployment/metrics*
 
 Administration
 ==============
