@@ -30,7 +30,7 @@ Quick Links:
 	`Custom Branding`_ - `Custom Emoji`_ - `Legal and Support`_ - `Mattermost App Links`_
 
 `Advanced`_
-	`Rate Limiting`_ - `Database`_ - `Developer`_ - `High Availability (Beta)`_
+	`Rate Limiting`_ - `Database`_ - `Developer`_ - `High Availability (Beta)`_ - `Performance Monitoring (Beta)`_
 
 General
 ---------------------------------
@@ -2083,6 +2083,31 @@ A list of all the machines in the cluster, separated by commas, for example, ``[
 
 +-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | This feature’s ``config.json`` setting is ``"InterNodeUrls": []`` with string input.                                                                                        |
++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+________________________________________________________________________________________________________________________________________________________________________
+
+Performance Monitoring (Beta)
+```````````````````````````
+*Available in Enterprise Edition E20*
+
+Enable Performance Monitoring
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+**True**: When true, Mattermost will enable performance monitoring collection and profiling. Please see `documentation <https://docs.mattermost.com/deployment/metrics.html>`_ to learn more about configuring performance monitoring for Mattermost.
+
+**False**: Mattemost performane monitoring is disabled.
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| This feature’s ``config.json`` setting is ``"Enable": false`` with options ``true`` and ``false`` for above settings respectively.                                             |
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+
+Listen Address
+~~~~~~~~~~~~~~~~~~~~~~~~~
+The address the Mattermost server will listen on to expose performance metrics.
+
++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| This feature’s ``config.json`` setting is ``"InterNodeListenAddress": ":8067"`` with string input.                                                                          |
 +-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 ------
