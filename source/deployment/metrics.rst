@@ -3,22 +3,11 @@ Performance Monitoring (E20) - Beta
 
 *Available in Enterprise Edition E20*.
 
-Performance monitoring support enables a Mattermost server to track system health through integrations with `Prometheus <https://prometheus.io/>`_ and `Grafana <http://grafana.org/>`_, an essential feature for large Enterprise deployments. This documentation provides a deployment guide and ... // XXX add links for section headings
+Performance monitoring support enables a Mattermost server to track system health for large Enterprise deployments through integrations with `Prometheus <https://prometheus.io/>`_ and `Grafana <http://grafana.org/>`_. 
 
+This documentation provides a deployment guide and ... // XXX add links for section headings
 
-
-configuration
- - prometheus
- - grafana
- 
-metrics
- - go metrics --> sample chart
- - mattermost --> sample chart
-
-troubleshooting
-
-
-Configuration
+Deployment Guide
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Details on integrating your Mattermost server with Prometheus and Grafana.
 
@@ -65,72 +54,107 @@ Installing Prometheus
           - targets: ["<hostname1>:<port>", "<hostname2>:<port>"]
   }
 
-3 - Enable performance monitoring in the System Console and specify the Listen Address. See more detail in our `configuration settings documentation <>`_. // XXX Link
+3 - Enable performance monitoring in the Mattermost System Console and specify the listen address. See more detail in our `configuration settings documentation <https://docs.mattermost.com/administration/config-settings.html#performance-monitoring-beta>`_.
 
 // XXX Image
 
-4 - To test the server is running, run ``ip:port/metrics``
+4 - To test the server is running, go to ``ip:port/metrics``.
 
 5 - Run ``vi prometheus.yml`` to finish configuring Prometheus.
 
-// XXX Some notes about configuration
+For starting the Prometheus service, read the `comprehensive guides provided by Prometheus <https://prometheus.io/docs/introduction/getting_started/#starting-prometheus>`_.
 
-7.	Then they have instructions to starting the service for collecting data
-8.	Please use standard docs to have it running
-9.	Go to this address localhost:9090/graph
-a.	http://metrics.mattermost.com:9090/graph
-10.	Sample chart in prometheus
+6 - Once the service has started, you can access the data in ``localhost:port/graph``. 
 
+While you can use the Prometheus service to create graphs, we'll focus on creating metric and analytics dashboards in Grafana.
+
+.. note:: For troubleshooting advice, check the `Prometheus FAQ page <https://prometheus.io/docs/introduction/faq/>`_.
 
 Installing Grafana
 ------------------------------------------------
 
-12.	Now set up these charts in Grafana
-a.	Install from http://docs.grafana.org/installation/debian/
-13.	Start the server
-a.	Their package installs it as a service
-b.	http://metrics.mattermost.com:3000/login admin/admin
+1 - `Download a precompiled binary for Grafana <http://docs.grafana.org/installation/debian/>`_ on Ubuntu or Debian. Binaries are avaiable for many other distributions, including Redhat, Windows and Mac.
+
+ - For install instructions, see `Grafana install guides <http://docs.grafana.org/installation/debian/>`_
+
+2 - The Grafana package is installed as a service, so it easy to start the server. See their `install guides <http://docs.grafana.org/installation/debian/>`_ to learn more.
+
+3 - The default HTTP port is `3000` and default username and password are ``admin``.
+
+.. note:: For troubleshooting advice, check the `Grafana Troubleshooting page <http://docs.grafana.org/installation/troubleshooting/>`_.
+
+// XXX link to tutorials to get you started
+
+Statistics
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Mattermost provides the following performance monitoring statistics.
+
+Standard GO Metrics
+------------------------------------------------
+
+The existing integration with Prometheus provides standard GO metrics for system monitoring, including 
+    
+    - ``go_memstats_alloc_bytes`` for memory usage
+    - ``go_goroutines`` for GO routines
+    - ``go_gc_duration_seconds`` for garbage collection duration
+    - ``go_memstats_heap_objects`` for object tracking on the heap
+
+For a complete list with descriptions, visit the ``ip:port/metrics`` page.
+
+Moreover, ``ip:port`` provides more advanced GO profiling metrics, including
+
+    - ``/debug/pprof``/ for root profiling
+    - ``/debug/pprof/cmdline``/ for command line profiling
+    - ``/debug/pprof/symbol``/ for symbol profiling
+    - ``/debug/pprof/goroutine``/ for GO routine profiling
+    - ``/debug/pprof/heap``/ for heap profiling
+    - ``/debug/pprof/threadcreate``/ for threads profiling
+    - ``/debug/pprof/block``/ for block profiling
+
+For more information on the advanced profiling metrics, see the `pprof package documentation <https://golang.org/pkg/net/http/pprof/>`_.
+
+// XXX Add an image
+
+Custom Mattermost Metrics
+------------------------------------------------
+
+The following is a list of custom Mattermost metrics that can be used to monitor your system's performance:
+
+Database Metrics:
+
+    - ``mattermost_db_master_connections_total``: The total number of connections to the master database.
+    - ``mattermost_db_read_replica_connections_total``: The total number of connections to all the read replica databases.
+
+HTTP Metrics:
+
+    - ``mattermost_http_errors_total``: The total number of http API errors.
+    - ``mattermost_http_request_duration_seconds``: The total duration in seconds of the http API requests.
+    - ``mattermost_http_requests_total``: The total number of http API requests.
+
+Login and Session Metrics:
+
+    - ``mattermost_http_websockets_total`` The total number of websocket connections to the server.
+    - ``mattermost_login_logins_fail_total``: The total number of failed logins.
+    - ``mattermost_login_logins_total``: The total number of successful logins.
+
+Messaging Metrics:
+
+    - ``mattermost_post_broadcasts_total``: The total number of websocket broadcasts sent beacuse a post was created.
+    - ``mattermost_post_emails_sent_total``: The total number of emails sent beacuse a post was created.
+    - ``mattermost_post_file_attachments_total``: The total number of file attachments created because a post was created.
+    - ``mattermost_post_pushes_sent_total``: The total number of mobile push notifications sent beacuse a post was created.
+    - ``mattermost_post_total``: The total number of posts created.
+
+Process Metrics:
+
+    - ``mattermost_process_cpu_seconds_total``: Total user and system CPU time spent in seconds.
+    - ``mattermost_process_max_fds``: Maximum number of open file descriptors.
+    - ``mattermost_process_open_fds``: Number of open file descriptors.
+    - ``mattermost_process_resident_memory_bytes``: Resident memory size in bytes.
+    - ``mattermost_process_start_time_seconds``: Start time of the process since unix epoch in seconds.
+    - ``mattermost_process_virtual_memory_bytes``: Virtual memory size in bytes.
 
 
-METRICS
-
-b.	Go in front of it is standard GO metrics
-i.	Geared to users
-c.	Those with mattermost added by us
-d.	Copy this and paste to docs
-e.	Profiling stuff on root page is standard GO profiling tools
-i.	Geared to GO profiling
-ii.	Just a high-level summary
-iii.	Point to GO documentation
-
-
-MATTERMOST:
-
-master DB connections - connections to master DB
-read replica DB connections - connections to read replica DBs
-------------------------------
-http errors total - API Errors per Minute
-http request duration seconds bucket -- this gives request time bucket (?)
-http request duration seconds count
-http request duration seconds sum -- this divided by count gives avg request time per minute
-http requests total - API requests per minute
-http websockets total - number of users online
-login logins fail total - # of failed logins
-login logins total - # of successful logins
-post broadcasts total - broadcasts
-post emails sent total -
-post file attachments total -
-post pushes sent total -
-post total - messages
-process cpu total
-process max fds
-process open fds
-process resident memory bytes
-process start time seconds
-process virtual memory bytes
-
-and a bunch of go routines
- - memory usage
- - go routines
- - garbace collection duration
- - objects on the heap
+// XXX Add an image of dashboards
+// XXX Supports data collection from several Mattermost servers
