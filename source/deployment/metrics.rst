@@ -5,7 +5,7 @@ Performance Monitoring (E20) - Beta
 
 Performance monitoring support enables a Mattermost server to track system health for large Enterprise deployments through integrations with `Prometheus <https://prometheus.io/>`_ and `Grafana <http://grafana.org/>`_. 
 
-This documentation provides a deployment guide and ... // XXX add links for section headings
+The integration supports data collection from several Mattermost servers, particularly useful if you're running Mattermost `in high availability mode <https://docs.mattermost.com/deployment/cluster.html>`_.
 
 Deployment Guide
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -16,9 +16,9 @@ Installing Prometheus
 
 1 - `Download a precompiled binary for Prometheus <https://prometheus.io/download/>`_. Binaries are provided for many popular distributions, including Darwin, Linux and Windows.
 
- - For install instructions, see `Prometheus install guides <https://prometheus.io/docs/introduction/getting_started/>`_
+For install instructions, see `Prometheus install guides <https://prometheus.io/docs/introduction/getting_started/>`_
 
-2 - The following settings are recommended in the basic Prometheus configuration file named ``prometheus.yml``:
+2 - The following settings are recommended in the Prometheus configuration file named ``prometheus.yml``:
  
 .. code:: yaml
 
@@ -56,15 +56,15 @@ Installing Prometheus
 
 3 - Enable performance monitoring in the Mattermost System Console and specify the listen address. See more detail in our `configuration settings documentation <https://docs.mattermost.com/administration/config-settings.html#performance-monitoring-beta>`_.
 
-// XXX Image
+![perf_monitoring_system_console](../../images/perf_monitoring_system_console.png)
 
-4 - To test the server is running, go to ``ip:port/metrics``.
+4 - To test the server is running, go to ``<ip>:<port>/metrics``.
 
-5 - Run ``vi prometheus.yml`` to finish configuring Prometheus.
+5 - Finally, run ``vi prometheus.yml`` to finish configuring Prometheus.
 
 For starting the Prometheus service, read the `comprehensive guides provided by Prometheus <https://prometheus.io/docs/introduction/getting_started/#starting-prometheus>`_.
 
-6 - Once the service has started, you can access the data in ``localhost:port/graph``. 
+6 - Once the service has started, you can access the data in ``<localhost>:<port>/graph``. 
 
 While you can use the Prometheus service to create graphs, we'll focus on creating metric and analytics dashboards in Grafana.
 
@@ -73,22 +73,22 @@ While you can use the Prometheus service to create graphs, we'll focus on creati
 Installing Grafana
 ------------------------------------------------
 
-1 - `Download a precompiled binary for Grafana <http://docs.grafana.org/installation/debian/>`_ on Ubuntu or Debian. Binaries are avaiable for many other distributions, including Redhat, Windows and Mac.
+1 - `Download a precompiled binary for Grafana <http://docs.grafana.org/installation/debian/>`_ on Ubuntu or Debian. Binaries are also available for other distributions, including Redhat, Windows and Mac.
 
- - For install instructions, see `Grafana install guides <http://docs.grafana.org/installation/debian/>`_
+For install instructions, see `Grafana install guides <http://docs.grafana.org/installation/debian/>`_
 
-2 - The Grafana package is installed as a service, so it easy to start the server. See their `install guides <http://docs.grafana.org/installation/debian/>`_ to learn more.
+2 - The Grafana package is installed as a service, so it is easy to start the server. See their `install guides <http://docs.grafana.org/installation/debian/>`_ to learn more.
 
-3 - The default HTTP port is `3000` and default username and password are ``admin``.
+3 - The default HTTP port is ``3000`` and default username and password are ``admin``.
 
 .. note:: For troubleshooting advice, check the `Grafana Troubleshooting page <http://docs.grafana.org/installation/troubleshooting/>`_.
 
-// XXX link to tutorials to get you started
+For user guides and tutorials, check the `Grafana documentation to learn more <http://docs.grafana.org/guides/basic_concepts/>`_.
 
 Statistics
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Mattermost provides the following performance monitoring statistics.
+Mattermost provides the following performance monitoring statistics to integrate with Prometheus and Grafana.
 
 Standard GO Metrics
 ------------------------------------------------
@@ -102,7 +102,7 @@ The existing integration with Prometheus provides standard GO metrics for system
 
 For a complete list with descriptions, visit the ``ip:port/metrics`` page.
 
-Moreover, ``ip:port`` provides more advanced GO profiling metrics, including
+Moreover, ``<ip>:<port>`` http site provides more advanced GO profiling metrics, including
 
     - ``/debug/pprof``/ for root profiling
     - ``/debug/pprof/cmdline``/ for command line profiling
@@ -114,7 +114,7 @@ Moreover, ``ip:port`` provides more advanced GO profiling metrics, including
 
 For more information on the advanced profiling metrics, see the `pprof package documentation <https://golang.org/pkg/net/http/pprof/>`_.
 
-// XXX Add an image
+![perf_monitoring_go_metrics](../../images/perf_monitoring_go_metrics.png)
 
 Custom Mattermost Metrics
 ------------------------------------------------
@@ -155,6 +155,6 @@ Process Metrics:
     - ``mattermost_process_start_time_seconds``: Start time of the process since unix epoch in seconds.
     - ``mattermost_process_virtual_memory_bytes``: Virtual memory size in bytes.
 
+![perf_monitoring_http_metrics](../../images/perf_monitoring_http_metrics.png)
 
-// XXX Add an image of dashboards
-// XXX Supports data collection from several Mattermost servers
+![perf_monitoring_messaging_metrics](../../images/perf_monitoring_messaging_metrics.png)
