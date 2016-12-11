@@ -56,7 +56,7 @@ For install instructions, see `Prometheus install guides <https://prometheus.io/
 
 3 - Enable performance monitoring in the Mattermost System Console and specify the listen address. See more detail in our `configuration settings documentation <https://docs.mattermost.com/administration/config-settings.html#performance-monitoring-beta>`_.
 
-![perf_monitoring_system_console](../../images/perf_monitoring_system_console.png)
+.. image:: ../../images/perf_monitoring_system_console.png
 
 4 - To test the server is running, go to ``<ip>:<port>/metrics``.
 
@@ -114,7 +114,7 @@ Moreover, ``<ip>:<port>`` http site provides more advanced GO profiling metrics,
 
 For more information on the advanced profiling metrics, see the `pprof package documentation <https://golang.org/pkg/net/http/pprof/>`_.
 
-![perf_monitoring_go_metrics](../../images/perf_monitoring_go_metrics.png)
+.. image:: ../../images/perf_monitoring_go_metrics.png
 
 Custom Mattermost Metrics
 ------------------------------------------------
@@ -155,6 +155,6 @@ Process Metrics:
     - ``mattermost_process_start_time_seconds``: Start time of the process since unix epoch in seconds.
     - ``mattermost_process_virtual_memory_bytes``: Virtual memory size in bytes.
 
-![perf_monitoring_http_metrics](../../images/perf_monitoring_http_metrics.png)
+.. image:: ../../images/perf_monitoring_http_metrics.png
 
-![perf_monitoring_messaging_metrics](../../images/perf_monitoring_messaging_metrics.png)
+.. image:: ../../images/perf_monitoring_messaging_metrics.png
